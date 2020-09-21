@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+        if ('SpeechRecognition' in window) {
+            // ユーザのブラウザは音声合成に対応しています。
+            // recognition.interimResults = true;　//認識途中でも結果を得る
+            recognition.continuous = true;         //認識し続ける　1分間認識しないとfalse
+            recognition.onresult = (event) => {
+                console.log(event.results);
+                // console.log(event.results[0][0].transcript);
+                // console.log(event.results[0].isFinal); // 発言が終了したかどうか
+            }
+
+            recognition.start();
+        } else {
+            // ユーザのブラウザは音声合成に対応していません。
+            alert("このブラウザには音声認識に対応していません")
+        }
+
+    </script>
+
+</body>
+
+</html>
