@@ -14,7 +14,9 @@
         const ctx = cvs.getContext('2d');
 
         let text = "";
+        let ctext = "";
         let check;
+        let mode = 0;
 
         SpeechRecognition = webkitSpeechRecognition || SpeechRecognition; //ChromeとFirefoxで音声デバイス許可しますか？のヤツ
         const recognition = new SpeechRecognition();　//WebAPIが使えるようになるよ
@@ -26,34 +28,38 @@
             ctx.font = "24px Arial";
             ctx.fillStyle = "black";
             ctx.fillText("STARTと言ってみて", 1024 / 2, 768 / 2);
-            SpeechRecord();
         }
 
-        recognition.onend = function () {
-            if (!check) {
-                recognition.start();
-            }
-        }
-
-        function SpeechRecord() {
-            recognition.onresult = function (e) {
-                if (e.results[e.resultIndex].isFinal) {
-                    text = e.results[e.resultIndex][0].transcript;
-                    console.log(text);
-                    console.log(e.results);
+        recognition.onresult = function (e) {
+            if (e.results[e.resultIndex].isFinal) {
+                text = e.results[e.resultIndex][0].transcript;
+                console.log(text);
+                console.log(e.results);
+                if (mode == 0) {
+                    ctext = "スタート";
                     TextCheck();
                 }
             }
         }
 
+        recognition.onend = function () {
+            recognition.start();
+        }
+
         function TextCheck() {
-            let reg = new RegExp(/スタート/);
+            let reg = new RegExp(ctext);
             check = reg.test(text);
             console.log(check);
             if (check) {
-                selectMode();
-            } else {
-                SpeechRecord();
+                switch (mode) {
+                    case 0:
+                        mode = 1;
+                        selectMode();
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 
