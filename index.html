@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/kurenai.png">
+    <title>音声認識RPG</title>
+</head>
+
+<body>
+    <style>
+        @font-face {
+            font-family: 'Font';
+            src: url('./font/PixelMplus12-Regular.ttf');
+        }
+
+        .game {
+            position: relative;
+        }
+
+        .game #image {
+            position: absolute;
+        }
+
+        .game input.input {
+            position: absolute;
+            top: 610px;
+            left: 660px;
+            font-size: 24px;
+        }
+
+        .game input.input2 {
+            position: absolute;
+            top: 810px;
+            left: 1110px;
+            font-size: 24px;
+        }
+
+        .game #message_window {
+            top: 630px;
+            position: absolute;
+            font-family: 'PixelMplus12';
+            font-size: 24px;
+            color: white;
+            width: 500px;
+            margin: 1em;
+            padding: 1em;
+            float: left;
+            height: 6.5em;
+            overflow: hidden;
+        }
+
+        .game #rec {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            font-family: 'PixelMplus12';
+            font-size: 48px;
+            color: red;
+            visibility: hidden;
+        }
+
+        ul li{
+            font-size: 24px;
+        }
+    </style>
+
+    <div class="game">
+        <canvas id="cv" width="1440" height="900"></canvas>
+        <div id="message_window"></div>
+        <div id="rec">●REC</div>
+        <img id="image">
+        <input class="input" id="input" type="text" maxlength="6" size="7" style="visibility: hidden;">
+        <input class="input2" id="input2" type="text" maxlength="10" size="20" style="visibility: hidden;">
+    </div>
+    <script src="./jscode/RPG.js"></script>
+    <script src="./jscode/hanabi.js"></script>
+    <hr noshade>
+
+    <h2>攻撃コマンドのヒント</h2>
+    <ul>
+        <li>魔法が使えるぞ！！ (例：<span style="color:red">ファイヤー</span>、フラッシュ、サンダー、<span
+                style="color:blue">フリーズ</span>、<span style="color:green">ウィンド</span>、<span
+                style="color:blue">アクア</span>、<span style="color:purple">ダーク</span>etc...</li>
+        <li>回復魔法で味方を助けよう！！</li>
+        <li>失敗しても技が発動することがあるぞ！</li>
+        <li>複合魔法、バフ・デバフ・MP回復等の特殊コマンドはないぞ…</li>
+    </ul>
+    <p></p>
+
+</body>
+
+</html>
