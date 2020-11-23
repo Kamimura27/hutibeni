@@ -5,7 +5,6 @@ const INPUT2 = document.getElementById('input2');       //  コマンド入力�
 const script = document.createElement('script');        //  花火描画するjavascript用のスクリプト生成
 const IMG = document.getElementById('image');
 const REC = document.getElementById('rec');
-const SPAN = document.getElementById('span');
 const SCREEN_X = 1440;                                  //  キャンバスの幅
 const SCREEN_Y = 900;                                   //  キャンバスの高さ
 const TITLE = '音声認識RPG';                             //  タイトル名
@@ -181,12 +180,12 @@ window.onload = () => {
         loadImage(),
         loadBgm(),
         initRPG()
-    ]).then(function () {
-        setTimeout(function () {
+    ]).then(function(){
+        setTimeout(function(){
             ctx.drawImage(bgimg[1], 0, 0, SCREEN_X, SCREEN_Y);
             drawTitle();
             drawSTART();
-        }, 500)
+        },500)
     });
 };;
 
@@ -530,27 +529,13 @@ function drawTitle() {
 
 //STARTの描画
 function drawSTART() {
-    let flag = 0;
-    let sec = 700;
     ctx.font = 'bold 60pt PixelMplus12';
     ctx.fillStyle = 'orange';
     ctx.fillText('START', 590, 620);
-    setInterval(() => {
-        if (flag == 0) {
-            SPAN.style.visibility = "visible";
-        }
-        if (flag == 1) {
-            SPAN.style.visibility = "hidden";
-        }
-        flag = 1 - flag;
-    }, sec);
-
 }
 
 //モード選択のウィンドウの描画
 function drawMode() {
-    SPAN.style.visibility = "hidden";
-    music[0].play();
     drawFrame();
     ctx.font = 'bold 24pt PixelMplus12';
     ctx.fillStyle = 'black';
@@ -962,7 +947,7 @@ function playerHeal(ctext) {
                 dead_player--;
             }
             player[i].hp += ctext.magni / playerNum;
-            if (player[i].hp > player[i].MAXhp) player[i].hp = player[i].MAXhp;
+            if(player[i].hp > player[i].MAXhp) player[i].hp = player[i].MAXhp;
             ctx.font = 'bold 24pt PixelMplus12';
             ctx.fillStyle = 'green';
             ctx.fillText((ctext.magni / playerNum), 1335, 320 + (120 * i));
