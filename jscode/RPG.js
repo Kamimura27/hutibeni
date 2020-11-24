@@ -15,6 +15,7 @@ const gKey = new Uint8Array(0x100);
 var text = '';                                          //  名前確保用のメッセージ
 var name;
 var msg_buff = '';                                      //  メッセージバッファ
+var msg_buff2 = '';
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js";
 
 //矢印の位置
@@ -47,6 +48,7 @@ let recognition;
 let check = false;
 var pal;
 var palc;
+var sflag = 0;
 
 let checkText = [
     ['スタート', '佐藤', '佐渡'],
@@ -525,31 +527,29 @@ function drawTitle() {
     ctx.strokeStyle = 'red';
     ctx.lineWidth = 2;
     ctx.strokeText(TITLE, 400, 330);
-
 };
 
 //STARTの描画
 function drawSTART() {
-    let flag = 0;
     let sec = 700;
     ctx.font = 'bold 60pt PixelMplus12';
     ctx.fillStyle = 'orange';
     ctx.fillText('START', 590, 620);
     setInterval(() => {
-        if (flag == 0) {
+        if (sflag == 0) {
             SPAN.style.visibility = "visible";
         }
-        if (flag == 1) {
+        if (sflag == 1) {
             SPAN.style.visibility = "hidden";
         }
-        flag = 1 - flag;
+        sflag = 1 - sflag;
     }, sec);
-
 }
 
 //モード選択のウィンドウの描画
 function drawMode() {
     SPAN.style.visibility = "hidden";
+    sflag=-1;
     music[0].play();
     drawFrame();
     ctx.font = 'bold 24pt PixelMplus12';
@@ -599,7 +599,6 @@ function NameCheck() {
     ctx.fillText('いいえ', Font_X2, 650);
     drawArrow();
     callbackId = requestAnimationFrame(NameCheck);
-
 }
 
 //  ステータス決定（乱数）
@@ -649,6 +648,33 @@ function message_char() {
     //メッセージバッファから先頭１文字を削除
     msg_buff = msg_buff.slice(1);
     setTimeout('message_char()', 30);
+}
+
+function message2(msg) {
+    if (msg_buff2 == '') {
+        msg_buff2 += msg + "\n";
+        message_char2();
+    } else {
+        msg_buff2 += msg + "\n";
+    }
+}
+
+function message_char2() {
+    if (msg_buff2 == '') {
+        //メッセージバッファに文字がなければ何の処理もしない
+        return;
+    }
+    //メッセージバッファの先頭１文字を取得
+    let c = msg_buff2.slice(0, 1);
+    if (c == "\n") {
+        c = '<br>'; //改行の場合はタグへ変換
+        var m2 = document.getElementById('message');
+        m2.scrollTop = m2.scrollHeight;
+    }
+    document.getElementById('message').innerHTML += c;
+    //メッセージバッファから先頭１文字を削除
+    msg_buff2 = msg_buff2.slice(1);
+    setTimeout('message_char2()', 0);
 }
 
 //ステージの設定(背景と敵)
@@ -1038,7 +1064,6 @@ function Reset() {
 var ngword = ["んこ", "ェラ", "睾丸"]
 
 function SpeechRec() {
-    let c = 0;
     SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
     recognition = new SpeechRecognition();
     recognition.lang = 'ja';
@@ -1057,7 +1082,7 @@ function SpeechRec() {
             if (e.results[e.resultIndex].isFinal) {
                 text = e.results[e.resultIndex][0].transcript;
                 text = text.trim();
-                console.log(`音声最終決定: ${text}`);
+                message2(`音声最終決定: ${text}`);
                 if (text.length <= 10) {
                     TextCheck();
                 }
@@ -1068,7 +1093,7 @@ function SpeechRec() {
                 } else {
                     INPUT2.value = e.results[e.resultIndex][0].transcript;
                 }
-                console.log(`途中結果: ${e.results[e.resultIndex][0].transcript}`);
+                message2(`途中結果: ${e.results[e.resultIndex][0].transcript}`);
             }
         }
     };
