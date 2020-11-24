@@ -59,6 +59,22 @@
             color: red;
             visibility: hidden;
         }
+
+        .game #message {
+            position: absolute;
+            top: 0px;
+            left: 1450px;
+            font-family: 'PixelMplus12';
+            font-size: 20px;
+            color: black;
+            width: 700px;
+            height: 500px;
+            margin: 1em;
+            padding: 1em;
+            float: left;
+            height: 41.7em;
+            overflow: hidden;
+        }
         #span{
             position: absolute;
             top: 690px;
@@ -81,6 +97,7 @@
         <img id="image">
         <input class="input" id="input" type="text" maxlength="6" size="7" style="visibility: hidden;">
         <input class="input2" id="input2" type="text" maxlength="10" size="20" style="visibility: hidden;">
+        <div id="message"></div>
     </div>
     <span id="span">STARTと言ってね</span>
     <script src="./jscode/RPG.js"></script>
