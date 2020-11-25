@@ -195,7 +195,7 @@ window.onload = () => {
             drawSTART();
         }, 500)
     });
-};;
+};
 
 function TextCheck() {
     let ctext = "";
@@ -728,9 +728,9 @@ function initStage() {
 
 //  バトルの描画
 function drawBattle() {
-    METER1.style.visibility = "visible";
-    METER2.style.visibility = "visible";
-    METER3.style.visibility = "visible";
+    //METER1.style.visibility = "visible";
+    //METER2.style.visibility = "visible";
+    //METER3.style.visibility = "visible";
     ctx.drawImage(bgimg[0], 0, 0, SCREEN_X, SCREEN_Y);
     ctx.drawImage(bgimg[stage[scount][0]], 30, 24, 1025, 573);
     for (let i = 1; i < stage[scount].length; i++) {
