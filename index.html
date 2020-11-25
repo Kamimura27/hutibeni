@@ -75,6 +75,27 @@
             height: 41.7em;
             overflow: hidden;
         }
+
+        .game meter.meter1{
+            position: absolute;
+            top: 520px;
+            left: 250px;
+            visibility: hidden;
+        }
+
+        .game meter.meter2{
+            position: absolute;
+            top: 520px;
+            left: 550px;
+            visibility: hidden;
+        }
+
+        .game meter.meter3{
+            position: absolute;
+            top: 520px;
+            left: 850px;
+            visibility: hidden;
+        }
         #span{
             position: absolute;
             top: 690px;
@@ -98,6 +119,9 @@
         <input class="input" id="input" type="text" maxlength="6" size="7" style="visibility: hidden;">
         <input class="input2" id="input2" type="text" maxlength="10" size="20" style="visibility: hidden;">
         <div id="message"></div>
+        <meter class="meter1" id = "meter1" max="130" value="130" low="30"></meter>
+        <meter class="meter2" id = "meter2" max="130" value="130" low="30"></meter>
+        <meter class="meter3" id = "meter3" max="130" value="130" low="30"></meter>
     </div>
     <span id="span">STARTと言ってね</span>
     <script src="./jscode/RPG.js"></script>
