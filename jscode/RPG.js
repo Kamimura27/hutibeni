@@ -6,6 +6,10 @@ const script = document.createElement('script');        //  花火描画するja
 const IMG = document.getElementById('image');
 const REC = document.getElementById('rec');
 const SPAN = document.getElementById('span');
+const METER1 = document.getElementById('meter1');
+const METER2 = document.getElementById('meter2');
+const METER3 = document.getElementById('meter3');
+
 const SCREEN_X = 1440;                                  //  キャンバスの幅
 const SCREEN_Y = 900;                                   //  キャンバスの高さ
 const TITLE = '音声認識RPG';                             //  タイトル名
@@ -16,6 +20,7 @@ var text = '';                                          //  名前確保用の�
 var name;
 var msg_buff = '';                                      //  メッセージバッファ
 var msg_buff2 = '';
+var sflag = 0;
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js";
 
 //矢印の位置
@@ -48,7 +53,7 @@ let recognition;
 let check = false;
 var pal;
 var palc;
-var sflag = 0;
+
 
 let checkText = [
     ['スタート', '佐藤', '佐渡'],
@@ -549,7 +554,7 @@ function drawSTART() {
 //モード選択のウィンドウの描画
 function drawMode() {
     SPAN.style.visibility = "hidden";
-    sflag=-1;
+    sflag = -1;
     music[0].play();
     drawFrame();
     ctx.font = 'bold 24pt PixelMplus12';
@@ -723,6 +728,9 @@ function initStage() {
 
 //  バトルの描画
 function drawBattle() {
+    METER1.style.visibility = "visible";
+    METER2.style.visibility = "visible";
+    METER3.style.visibility = "visible";
     ctx.drawImage(bgimg[0], 0, 0, SCREEN_X, SCREEN_Y);
     ctx.drawImage(bgimg[stage[scount][0]], 30, 24, 1025, 573);
     for (let i = 1; i < stage[scount].length; i++) {
@@ -959,7 +967,13 @@ function playerAttack(ctext, i) {
             }
             message(senemy[num].name + 'に' + (player[count].attack * (ctext.magni + cnum + critical) | 0) + 'のダメージを与えた!');
             ctx.fillText((player[count].attack * (ctext.magni + cnum + critical) | 0), monster_posPX * (num + ex + 1), 230 + enemyimg[stage[scount][num + 1]].height / 3);
+            /*if (num == 0) {
+                let o = senemy[num].hp -(player[count].attack * (ctext.magni + cnum + critical) | 0);
+                METER1.value = o;
+                console.log(o);
+            }*/
         }
+
         //  タゲったモンスターを倒した場合
         if (senemy[num].hp <= 0) {
             //  モンスター関連の配列の要素を削除
