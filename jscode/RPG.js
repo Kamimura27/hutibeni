@@ -1078,24 +1078,24 @@ function Reset() {
 var ngword = ["んこ", "ェラ", "睾丸"]
 
 function SpeechRec() {
-    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;  //Chromeとfirefoxに対応
     recognition = new SpeechRecognition();
     recognition.lang = 'ja';
-    recognition.continuous = false;
-    recognition.interimResults = true;
+    recognition.continuous = false;  //返す結果は1つ
+    recognition.interimResults = true;  //途中結果も表示
 
     recognition.onresult = function (e) {
         let ng = false;
         for (let i = 0; i < ngword.length; i++) {
             let reg = new RegExp(ngword[i]);
-            ng = reg.test(e.results[e.resultIndex][0].transcript);
+            ng = reg.test(e.results[e.resultIndex][0].transcript);  //1つめの配列入力されたもの2つめが変換候補
             if (ng) break;
         }
 
         if (!ng) {
-            if (e.results[e.resultIndex].isFinal) {
+            if (e.results[e.resultIndex].isFinal) {  //入力完了と判断した場合
                 text = e.results[e.resultIndex][0].transcript;
-                text = text.trim();
+                text = text.trim();  //空白を取り除く
                 message2(`音声最終決定: ${text}`);
                 if (text.length <= 10) {
                     TextCheck();
